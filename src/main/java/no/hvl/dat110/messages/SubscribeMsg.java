@@ -6,6 +6,7 @@ public class SubscribeMsg extends Message {
 
     public SubscribeMsg(String user, String topic) {
 
+        super(user);
     }
 
 	// TODO:

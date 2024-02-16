@@ -6,7 +6,7 @@ public abstract class Message {
 	private MessageType type;
 	private String user;
 	
-	public Message() {
+	public Message(String user) {
 		
 	}
 	

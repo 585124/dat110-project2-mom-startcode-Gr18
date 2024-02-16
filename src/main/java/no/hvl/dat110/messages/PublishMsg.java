@@ -8,7 +8,8 @@ public class PublishMsg extends Message {
 
 	public PublishMsg(String user, String topic, String message) {
 
-	}
+        super(user);
+    }
 
 	// TODO:
 	// Implement object variables - a topic and a message is required

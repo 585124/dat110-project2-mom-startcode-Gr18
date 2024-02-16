@@ -6,6 +6,7 @@ public class UnsubscribeMsg extends Message {
 
     public UnsubscribeMsg(String user, String topic) {
 
+        super(user);
     }
 
 	// TODO:
