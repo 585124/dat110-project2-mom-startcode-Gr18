@@ -5,10 +5,14 @@ import no.hvl.dat110.common.TODO;
 public class PublishMsg extends Message {
 	
 	// message sent from client to create publish a message on a topic 
+	private String topicName;
+	private String message;
 
 	public PublishMsg(String user, String topic, String message) {
 
         super(user);
+		this.topicName = topicName;
+		this.message = message;
     }
 
 	// TODO:
@@ -18,7 +22,27 @@ public class PublishMsg extends Message {
 	// as described in the project text
 	
 	public String getMessage() {
-		
-		throw new UnsupportedOperationException(TODO.method());
+
+		return message;
+	}
+
+	public void setMessage(String message){
+		this.message = message;
+	}
+	public String getTopicName() {
+		return topicName;
+	}
+
+	public void setTopicName(String topicName) {
+		this.topicName = topicName;
+	}
+
+	@Override
+	public String toString() {
+		return "PublishMsg{" +
+				"user='" + getUser() + '\'' +
+				", topicName='" + topicName + '\'' +
+				", message='" + message + '\'' +
+				'}';
 	}
 }
