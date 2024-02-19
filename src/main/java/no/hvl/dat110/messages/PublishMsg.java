@@ -1,18 +1,14 @@
 package no.hvl.dat110.messages;
 
-import no.hvl.dat110.common.TODO;
-
 public class PublishMsg extends Message {
 	
 	// message sent from client to create publish a message on a topic 
 	private String topicName;
-	private String message;
 
-	public PublishMsg(String user, String topic, String message) {
 
-        super(user);
-		this.topicName = topicName;
-		this.message = message;
+	public PublishMsg(String user, String message) {
+        super(MessageType.PUBLISH, user, message);
+
     }
 
 	// TODO:

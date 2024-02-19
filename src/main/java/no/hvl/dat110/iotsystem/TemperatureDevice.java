@@ -1,6 +1,7 @@
 package no.hvl.dat110.iotsystem;
 
 import no.hvl.dat110.client.Client;
+import no.hvl.dat110.client.Sensor;
 import no.hvl.dat110.common.TODO;
 
 public class TemperatureDevice {
@@ -12,15 +13,23 @@ public class TemperatureDevice {
 		// simulated / virtual temperature sensor
 		TemperatureSensor sn = new TemperatureSensor();
 
-		// TODO - start
+		Client sensorClient = new Sensor(Common.BROKERHOST, Common.BROKERPORT);
 
-		// create a client object and use it to
+		System.out.println("Temperature device starting ... ");
 
-		// - connect to the broker - user "sensor" as the user name
-		// - publish the temperature(s)
-		// - disconnect from the broker
 
-		// TODO - end
+		if(sensorClient.connect()) {
+			for (int i = 0; i < COUNT; i++) {
+				int temperature = sn.read(); // Les temperatur fra sensoren
+				sensorClient.publish(Common.TEMPTOPIC, Integer.toString(temperature)); // Publiser temperatur til megleren
+				try {
+					Thread.sleep(5000); // Vent i 5 sekunder mellom hver avlesning
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			sensorClient.disconnect(); // Koble fra megleren når alle temperaturer er publisert
+		}
 
 		System.out.println("Temperature device stopping ... ");
 

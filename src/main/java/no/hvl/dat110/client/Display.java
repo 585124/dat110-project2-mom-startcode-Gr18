@@ -10,11 +10,21 @@ public class Display extends Client{
     public void startDisplay(){
         if(connect()){
             subscribe(Common.TEMPTOPIC);
-            // Logikk for displaying temperaturdata motattt fra sensoren
-            while (true) {
+
+            // Sett opp en teller for å holde styr på antall meldinger mottatt
+            int messagesReceived = 0;
+
+            // Maksimalt antall meldinger som skal mottas
+            int maxMessages = 10; // Endre dette til ønsket antall meldinger!!
+
+            // Mottak av meldinger
+            while (messagesReceived < maxMessages) {
                 String message = receive().getMessage();
                 System.out.println("Received temperature: " + message);
+                messagesReceived++;
             }
+            //avslutter klienten etter å ha motatt ønsket antall meldigner
+            disconnect();
         }
     }
 
@@ -23,4 +33,3 @@ public class Display extends Client{
         displayClient.startDisplay();
     }
 }
-

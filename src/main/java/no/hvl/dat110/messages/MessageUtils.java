@@ -13,49 +13,58 @@ public class MessageUtils {
 
 		JsonParser jsonParser = new JsonParser();
 		JsonObject json = jsonParser.parse(msg).getAsJsonObject();
-		
+
 		String typestr = json.get("type").getAsString();
 
-		MessageType type = MessageType.valueOf(typestr);
+		if (typestr != null) {
+			MessageType type = MessageType.valueOf(typestr);
 
-		Gson gson = new Gson();
-		Message message = null;
-		
-		switch (type) {
-		
-		case CONNECT:
-			message = gson.fromJson(json, ConnectMsg.class);
-			break;
-		case DISCONNECT:
-			message = gson.fromJson(json, DisconnectMsg.class);
-			break;
-			
-		case CREATETOPIC:
-			message = gson.fromJson(json, CreateTopicMsg.class);
-			break;
-			
-		case DELETETOPIC:
-			message = gson.fromJson(json, DeleteTopicMsg.class);
-			break;
-	
-		case SUBSCRIBE:
-			message = gson.fromJson(json, SubscribeMsg.class);
-			break;
-			
-		case UNSUBSCRIBE:
-			message = gson.fromJson(json, UnsubscribeMsg.class);
-			break;
-			
-		case PUBLISH:
-			message = gson.fromJson(json, PublishMsg.class);
-			break;
-			
-		default: 
-			Logger.log("fromJson - unknown message type");
-			break;
+			Gson gson = new Gson();
+			Message message = null;
+
+			switch (type) {
+
+				case CONNECT:
+					message = gson.fromJson(json, ConnectMsg.class);
+					break;
+				case DISCONNECT:
+					message = gson.fromJson(json, DisconnectMsg.class);
+					break;
+
+				case CREATETOPIC:
+					message = gson.fromJson(json, CreateTopicMsg.class);
+					break;
+
+				case DELETETOPIC:
+					message = gson.fromJson(json, DeleteTopicMsg.class);
+					break;
+
+				case SUBSCRIBE:
+					message = gson.fromJson(json, SubscribeMsg.class);
+					break;
+
+				case UNSUBSCRIBE:
+					message = gson.fromJson(json, UnsubscribeMsg.class);
+					break;
+
+				case PUBLISH:
+					//message = gson.fromJson(json, PublishMsg.class);
+					// Sjekk om "message" nøkkelen eksisterer før du prøver å hente ut verdien
+					String publishMessage = json.has("message") ? json.get("message").getAsString() : null;
+					message = new PublishMsg(json.get("user").getAsString(), publishMessage);
+					break;
+
+
+				default:
+					Logger.log("fromJson - unknown message type");
+					break;
+			}
+
+			return message;
+		} else {
+			Logger.log("fromJson - type is not found in JSON object");
+			return null;
 		}
-
-		return message;
 	}
 
 	public static Message fromBytes(byte[] payload) {

@@ -5,17 +5,15 @@ public abstract class Message {
 	// base class for messages exchanged between broker and clients
 	private MessageType type;
 	private String user;
-	private String message;
-	
-	public Message(String user) {
-		
-	}
+	protected String message;
 	
 	public Message(MessageType type, String user, String message) {
 		this.type = type;
 		this.user = user;
 		this.message = message;
+	}
 
+	public Message(String user) {
 	}
 
 	public MessageType getType() { return this.type; }

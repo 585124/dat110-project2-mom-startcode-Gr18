@@ -1,34 +1,32 @@
 package no.hvl.dat110.client;
 
 import no.hvl.dat110.iotsystem.Common;
+import no.hvl.dat110.iotsystem.TemperatureSensor;
 
-public class Sensor extends Client{
+public class Sensor extends Client {
+
+    private TemperatureSensor temperatureSensor;
+
     public Sensor(String server, int port) {
         super("sensor", server, port);
+        this.temperatureSensor = new TemperatureSensor();
     }
 
-    public void startSensor(){
-        if(connect()){
+    public void startSensor() {
+        if (connect()) {
             subscribe(Common.TEMPTOPIC);
-            //Logikk for å lese av temperaturdata og publisere det periodevis(?)
+
+            // Les temperaturdata og publiser det periodisk
             while (true) {
-                double temperature = readTemperature();
-                publish(Common.TEMPTOPIC, Double.toString(temperature));
+                int temperature = temperatureSensor.read();
+                publish(Common.TEMPTOPIC, Integer.toString(temperature));
                 try {
-                    Thread.sleep(5000); // Sleep for 5 sekunder mellom hver avlesning
+                    Thread.sleep(5000); // Vent i 5 sekunder mellom hver avlesning
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         }
-    }
-
-    private double readTemperature() {
-        //Logikk for å lese av temperaturdata fra sensor
-
-        //!!HER MÅ VI GJØRE NOE
-
-        return 25.5; // tilfeldig eksempelvis temperatur
     }
 
     public static void main(String[] args) {
