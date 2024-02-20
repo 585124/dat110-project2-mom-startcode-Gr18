@@ -54,7 +54,6 @@ public class Storage {
 
 	public void addClientSession(String user, Connection connection) {
 
-		// TODO: add corresponding client session to the storage
 		ClientSession clientSession = new ClientSession(user, connection);
 
 		//legger til client session i storage
@@ -64,9 +63,6 @@ public class Storage {
 	}
 
 	public void removeClientSession(String user) {
-
-		// TODO: disconnet the client (user) 
-		// and remove client session for user from the storage
 /*
 Frakobler clienten tilhørende den gitte brukeren og
 fjerner den tilhørende client session fra storage
@@ -89,8 +85,6 @@ fjerner den tilhørende client session fra storage
 
 	public void createTopic(String topic) {
 
-		// TODO: create topic in the storage
-
 		//Legger til overskriften til subscriptions hvis de ikke allerede eksisterer
 		if(!subscriptions.contains(topic)) {
 			subscriptions.put(topic, ConcurrentHashMap.newKeySet());
@@ -103,8 +97,6 @@ fjerner den tilhørende client session fra storage
 
 	public void deleteTopic(String topic) {
 
-		// TODO: delete topic from the storage
-
 		//Fjerner overskriften fra the subscription hvis den eksisterer
 		if(subscriptions.containsKey(topic)){
 			subscriptions.remove(topic);
@@ -116,7 +108,7 @@ fjerner den tilhørende client session fra storage
 
 	public void addSubscriber(String user, String topic) {
 
-		// TODO: add the user as subscriber to the topic
+
 		// Sjekk om emnet allerede eksisterer i abonnementene
 		if (subscriptions.containsKey(topic)) {
 			// Hent settet med abonnenter for emnet
@@ -135,7 +127,7 @@ fjerner den tilhørende client session fra storage
 
 	public void removeSubscriber(String user, String topic) {
 
-		// TODO: remove the user as subscriber to the topic
+
 
 		// Sjekk om emnet eksisterer i abonnementene
 		if (subscriptions.containsKey(topic)) {

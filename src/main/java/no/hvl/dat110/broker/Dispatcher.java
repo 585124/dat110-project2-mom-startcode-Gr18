@@ -11,7 +11,7 @@ import no.hvl.dat110.messagetransport.Connection;
 
 public class Dispatcher extends Stopable {
 
-	private Storage storage;
+	private final Storage storage;
 
 	public Dispatcher(Storage storage) {
 		super("Dispatcher");
@@ -89,7 +89,7 @@ public class Dispatcher extends Stopable {
 
 		String user = msg.getUser();
 
-		Logger.log("onConnect:" + msg.toString());
+		Logger.log("onConnect:" + msg);
 
 		storage.addClientSession(user, connection);
 
@@ -100,7 +100,7 @@ public class Dispatcher extends Stopable {
 
 		String user = msg.getUser();
 
-		Logger.log("onDisconnect:" + msg.toString());
+		Logger.log("onDisconnect:" + msg);
 
 		storage.removeClientSession(user);
 
@@ -109,9 +109,6 @@ public class Dispatcher extends Stopable {
 	public void onCreateTopic(CreateTopicMsg msg) {
 
 		Logger.log("onCreateTopic:" + msg.toString());
-
-		// TODO: create the topic in the broker storage
-		// the topic is contained in the create topic message
 
 		//Hent ut overskriftens navn fra CreateTopicMsg
 		String topic = msg.getTopic();
@@ -128,9 +125,6 @@ public class Dispatcher extends Stopable {
 
 		Logger.log("onDeleteTopic:" + msg.toString());
 
-		// TODO: delete the topic from the broker storage
-		// the topic is contained in the delete topic message
-
 		//Henter ut overskrifts navnet fra DeleteTopigMsg
 		String topic = msg.getTopicName();
 
@@ -144,9 +138,6 @@ public class Dispatcher extends Stopable {
 	public void onSubscribe(SubscribeMsg msg) {
 
 		Logger.log("onSubscribe:" + msg.toString());
-
-		// TODO: subscribe user to the topic
-		// user and topic is contained in the subscribe message
 
 		//Henter ut brukeren og overskriften fra SubscribeMsg
 		String user = msg.getUser();
@@ -164,9 +155,6 @@ public class Dispatcher extends Stopable {
 
 		Logger.log("onUnsubscribe:" + msg.toString());
 
-		// TODO: unsubscribe user to the topic
-		// user and topic is contained in the unsubscribe message
-
 		//Henter ut brukeren fra overskriten fra UnsubscribeMsg
 		String user = msg.getUser();
 		String topic = msg.getTopicName();
@@ -182,10 +170,6 @@ public class Dispatcher extends Stopable {
 	public void onPublish(PublishMsg msg) {
 
 		Logger.log("onPublish:" + msg.toString());
-
-		// TODO: publish the message to clients subscribed to the topic
-		// topic and message is contained in the subscribe message
-		// messages must be sent using the corresponding client session objects
 
 		Set<String> subscribers=storage.getSubscribers(msg.getTopicName());
 

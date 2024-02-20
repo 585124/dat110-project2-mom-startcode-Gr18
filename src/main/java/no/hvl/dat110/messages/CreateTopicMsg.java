@@ -10,11 +10,6 @@ public class CreateTopicMsg extends Message {
 
     }
 
-	// TODO: 
-	// Implement object variables - a topic is required
-	
-	// Complete the constructor, get/set-methods, and toString method
-    // as described in the project text
 
     /*
     * Så vidt startet på Task A - getter + setter og toString

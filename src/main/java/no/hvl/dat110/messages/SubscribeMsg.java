@@ -8,14 +8,9 @@ public class SubscribeMsg extends Message {
     public SubscribeMsg(String user, String topic) {
 
         super(user);
-        this.topicName = topicName;
+       // this.topicName = topicName;
     }
 
-	// TODO:
-	// Implement object variables - a topic is required
-
-	// Complete the constructor, get/set-methods, and toString method
-	// as described in the project text
 
     /*
     * Task A - getter og setter + toString

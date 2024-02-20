@@ -9,7 +9,7 @@ public class ClientSession {
 	private String user;
 	
 	// underlying message transport connection
-	private Connection connection;
+	private final Connection connection;
 
 	public ClientSession(String user, Connection connection) {
 		this.user = user;
@@ -45,9 +45,7 @@ public class ClientSession {
 
 	public Message receive() {
 
-		Message msg = MessageUtils.receive(connection);
-
-		return msg;
+        return MessageUtils.receive(connection);
 	}
 
 }

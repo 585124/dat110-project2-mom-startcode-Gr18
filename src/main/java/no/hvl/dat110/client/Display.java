@@ -1,15 +1,17 @@
 package no.hvl.dat110.client;
-import no.hvl.dat110.client.Client;
-import no.hvl.dat110.iotsystem.Common;
 
-public class Display extends Client{
+import no.hvl.dat110.iotsystem.Common;
+import no.hvl.dat110.messages.Message;
+
+public class Display extends Client {
+
     public Display(String server, int port) {
         super("display", server, port);
     }
 
-    public void startDisplay(){
-        if(connect()){
-            subscribe(Common.TEMPTOPIC);
+    public void startDisplay() {
+        if (connect()) { // Koble til megleren
+            subscribe(Common.TEMPTOPIC); // Abonner på temperatur-temaet
 
             // Sett opp en teller for å holde styr på antall meldinger mottatt
             int messagesReceived = 0;
@@ -19,11 +21,14 @@ public class Display extends Client{
 
             // Mottak av meldinger
             while (messagesReceived < maxMessages) {
-                String message = receive().getMessage();
-                System.out.println("Received temperature: " + message);
-                messagesReceived++;
+                Message msg = receive(); // Motta melding fra megleren
+                if (msg != null) {
+                    System.out.println("Mottatt temperatur: " + msg.getMessage());
+                    messagesReceived++;
+                }
             }
-            //avslutter klienten etter å ha motatt ønsket antall meldigner
+
+            // Avslutt klienten etter å ha mottatt ønsket antall meldinger
             disconnect();
         }
     }

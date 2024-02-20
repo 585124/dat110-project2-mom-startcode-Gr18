@@ -10,12 +10,6 @@ public class DeleteTopicMsg extends Message {
         super(user);
         this.topicName = topicName;
     }
-
-	// TODO:
-	// Implement object variables - a topic is required
-
-	// Complete the constructor, get/set-methods, and toString method
-	// as described in the project text
 /*
 * Task A - getter og setter + toString
  */

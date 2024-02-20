@@ -25,8 +25,14 @@ public class MessageUtils {
 			switch (type) {
 
 				case CONNECT:
-					message = gson.fromJson(json, ConnectMsg.class);
-					break;
+					String user = json.has("user") ? json.get("user").getAsString() : null;
+					String messageContent = null;
+					if (json.has("message") && !json.get("message").isJsonNull()) {
+						messageContent = json.get("message").getAsString();
+					}
+					message = new ConnectMsg(user, messageContent);
+				break;
+
 				case DISCONNECT:
 					message = gson.fromJson(json, DisconnectMsg.class);
 					break;
@@ -50,8 +56,25 @@ public class MessageUtils {
 				case PUBLISH:
 					//message = gson.fromJson(json, PublishMsg.class);
 					// Sjekk om "message" nøkkelen eksisterer før du prøver å hente ut verdien
-					String publishMessage = json.has("message") ? json.get("message").getAsString() : null;
-					message = new PublishMsg(json.get("user").getAsString(), publishMessage);
+					//String publishMessage = json.has("message") ? json.get("message").getAsString() : null;
+					//message = new PublishMsg(json.get("user").getAsString(), publishMessage);
+
+
+					// Check if "message" key exists and its value is not null
+					if (json.has("message")) {
+						JsonElement messageElement = json.get("message");
+						if (messageElement != null && !messageElement.isJsonNull()) {
+							String publishMessage = messageElement.getAsString();
+							message = new PublishMsg(json.get("user").getAsString(), publishMessage);
+						} else {
+							// Assign a default value if "message" key exists but its value is null
+							message = new PublishMsg(json.get("user").getAsString(), "Default message");
+						}
+					} else {
+						// Log a message indicating that the "message" key is not present in the JSON object
+						Logger.log("The 'message' key is not present in the JSON object: " + json);
+						// Handle this case accordingly, e.g., throw an exception or assign a default value
+					}
 					break;
 
 

@@ -5,7 +5,7 @@ import no.hvl.dat110.iotsystem.TemperatureSensor;
 
 public class Sensor extends Client {
 
-    private TemperatureSensor temperatureSensor;
+    private final TemperatureSensor temperatureSensor;
 
     public Sensor(String server, int port) {
         super("sensor", server, port);
@@ -13,23 +13,27 @@ public class Sensor extends Client {
     }
 
     public void startSensor() {
-        if (connect()) {
-            subscribe(Common.TEMPTOPIC);
+            if (connect()) { // Koble til broker
+                subscribe(Common.TEMPTOPIC); // Abonner på temperatur-temaet
 
-            // Les temperaturdata og publiser det periodisk
-            while (true) {
-                int temperature = temperatureSensor.read();
-                publish(Common.TEMPTOPIC, Integer.toString(temperature));
-                try {
-                    Thread.sleep(5000); // Vent i 5 sekunder mellom hver avlesning
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                final int ANTALL_GANGER = 10; // Definer antall iterasjoner
+
+                for (int i = 0; i < ANTALL_GANGER; i++) { // Løkke ANTALL_GANGER ganger
+                    int temperatur = temperatureSensor.read(); // Les temperaturdata
+                    publish(Common.TEMPTOPIC, Integer.toString(temperatur)); // Publiser temperaturdataen
+                    try {
+                        Thread.sleep(5000); // Vent i 5 sekunder før neste iterasjon
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
+
+                disconnect(); // Koble fra broker etter at løkken er fullført
             }
         }
-    }
 
-    public static void main(String[] args) {
+
+        public static void main(String[] args) {
         Sensor sensorClient = new Sensor(Common.BROKERHOST, Common.BROKERPORT);
         sensorClient.startSensor();
     }
