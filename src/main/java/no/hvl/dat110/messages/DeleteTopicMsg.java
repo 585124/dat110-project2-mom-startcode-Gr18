@@ -5,10 +5,15 @@ public class DeleteTopicMsg extends Message {
 
 	// message sent from client to create topic on the broker
 
+    /**
+     * Bodil har endret
+     * @param user
+     * @param topic
+     */
     public DeleteTopicMsg(String user, String topic) {
 
-        super(user);
-        this.topicName = topicName;
+        super(MessageType.DELETETOPIC,user);
+        this.topicName = topic;
     }
 /*
 * Task A - getter og setter + toString

@@ -2,13 +2,19 @@ package no.hvl.dat110.messages;
 
 public class SubscribeMsg extends Message {
 
-	// message sent from client to subscribe on a topic 
+	// message sent from client to subscribe on a topic
+
     private String topicName;
 
+    /**
+     * Bodil har endret
+     * @param user
+     * @param topic
+     */
     public SubscribeMsg(String user, String topic) {
 
-        super(user);
-       // this.topicName = topicName;
+        super(MessageType.SUBSCRIBE, user);
+            this.topicName = topic;
     }
 
 
