@@ -5,12 +5,10 @@ public abstract class Message {
 	// base class for messages exchanged between broker and clients
 	private MessageType type;
 	private String user;
-	protected String message;
-	
-	public Message(MessageType type, String user, String message) {
+
+	public Message(MessageType type, String user) {
 		this.type = type;
 		this.user = user;
-		this.message = message;
 	}
 
 	public Message(String user) {
@@ -24,13 +22,11 @@ public abstract class Message {
 	}
 
 
-	public String getMessage() {
-		return message;
-	}
+
 
 	@Override
 	public String toString() {
-		return "Message [type=" + type + ", user=" + user + ", message=" + message + "]";
+		return "Message [type=" + type + ", user=" + user + "]";
 	};
 
 

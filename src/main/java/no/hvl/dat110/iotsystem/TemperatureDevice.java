@@ -1,7 +1,6 @@
 package no.hvl.dat110.iotsystem;
 
 import no.hvl.dat110.client.Client;
-import no.hvl.dat110.client.Sensor;
 import no.hvl.dat110.common.TODO;
 
 public class TemperatureDevice {
@@ -13,7 +12,7 @@ public class TemperatureDevice {
 		// simulated / virtual temperature sensor
 		TemperatureSensor sn = new TemperatureSensor();
 
-		Client sensorClient = new Sensor(Common.BROKERHOST, Common.BROKERPORT);
+		Client sensorClient = new Client("temperatureSensor", Common.BROKERHOST, Common.BROKERPORT);
 
 		System.out.println("Temperature device starting ... ");
 

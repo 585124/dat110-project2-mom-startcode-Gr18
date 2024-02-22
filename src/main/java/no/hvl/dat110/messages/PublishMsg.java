@@ -4,11 +4,13 @@ public class PublishMsg extends Message {
 	
 	// message sent from client to create publish a message on a topic 
 	private String topicName;
+	private String message;
 
 
-	public PublishMsg(String user, String message) {
-        super(MessageType.PUBLISH, user, message);
-
+	public PublishMsg(String user, String topicName, String message) {
+        super(MessageType.PUBLISH, user);
+		this.topicName = topicName;
+		this.message = message;
     }
 
 	
